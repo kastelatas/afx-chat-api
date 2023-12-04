@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<div>
+  <label for="name">Name</label>
+  <input type="text" id="name">
+  <br>
+  <label for="message">Message</label>
+  <input type="text" id="message">
+  <br>
+  <button id="btn">ok</button>
+</div>
+
+<div>
+  <textarea name="" id="" cols="30" rows="10" id="chat"></textarea>
+</div>
+
+<body>
+
+</body>
+
+<script>
+  const socket = new WebSocket('ws://localhost:8000');
+
+  const btn = document.getElementById('btn');
+  const chat = document.getElementById('chat');
+  const name = document.getElementById('name');
+  const message = document.getElementById('message');
+
+  btn.onclick = () => {
+    const event = {
+      type: "message-sent",
+      payload: {
+        sender_id: 2,
+        recipient_id: 1,
+        content: "payload.content2"
+      }
+    }
+
+    socket.send(JSON.stringify(testEvent));
+  }
+  socket.onopen = () => {
+    console.log('Соединение установлено');
+  }
+
+  socket.onmessage = (event) => {
+    console.log(event.data);
+  }
+
+</script>
+
+</html>
