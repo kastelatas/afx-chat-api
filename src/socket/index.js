@@ -12,8 +12,6 @@ const configureWebSocket = (server) => {
     console.log("New client connected to WebSocket");
 
     ws.on("message", (event) => {
-      console.log("Message received:", event);
-      console.log("type:", typeof event);
 
       let data;
       try {
@@ -28,8 +26,8 @@ const configureWebSocket = (server) => {
         case 'init':
           console.log("Client connected to WebSocket", data.payload);
           break
-        case 'message':
-          handleMessage(ws);
+        case 'messages':
+          handleMessage(ws, data);
           break
         case 'message-sent':
           handleMessageSent(ws, data);
@@ -50,8 +48,8 @@ const configureWebSocket = (server) => {
           break;
       }
 
-      ws.send(`Message reply "${data.payload.message}"`);
-      ws.send(`Response to a custom event "${data.payload.message}"`);
+      /*    ws.send(`Message reply "${data.payload.message}"`);
+         ws.send(`Response to a custom event "${data.payload.message}"`); */
     });
 
     ws.on("close", () => {

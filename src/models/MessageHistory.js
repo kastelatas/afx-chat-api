@@ -11,6 +11,10 @@ const MessageHistory = sequelize.define('MessageHistory', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  /*   seen: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    }, */
 
 });
 

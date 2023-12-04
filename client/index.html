@@ -11,13 +11,17 @@
   <input type="text" id="name">
   <br>
   <label for="message">Message</label>
-  <input type="text" id="message">
+  <textarea name="" cols="30" rows="10" id="message"></textarea>
+
   <br>
   <button id="btn">ok</button>
 </div>
 
 <div>
-  <textarea name="" id="" cols="30" rows="10" id="chat"></textarea>
+</div>
+
+<div id="messages">
+
 </div>
 
 <body>
@@ -31,6 +35,7 @@
   const chat = document.getElementById('chat');
   const name = document.getElementById('name');
   const message = document.getElementById('message');
+  const messages = document.getElementById('messages');
 
   btn.onclick = () => {
     const event = {
@@ -38,18 +43,34 @@
       payload: {
         sender_id: 2,
         recipient_id: 1,
-        content: "payload.content2"
+        content: message.value
       }
     }
 
-    socket.send(JSON.stringify(testEvent));
+    socket.send(JSON.stringify(event));
   }
   socket.onopen = () => {
     console.log('Соединение установлено');
+
+    socket.send(JSON.stringify({
+      type: "messages",
+      payload: {
+        sender_id: 2,
+        recipient_id: 1
+      }
+    }))
   }
 
   socket.onmessage = (event) => {
-    console.log(event.data);
+    const data = JSON.parse(event.data);
+    switch (data.type) {
+      case "messageHistory":
+        console.log(data);
+        messages.innerHTML = ``;
+        data.payload.messageHistory.map((message) => {
+          messages.innerHTML += `<p>${message.content}</p>`;
+        })
+    }
   }
 
 </script>
