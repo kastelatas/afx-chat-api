@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
 const sequelize = require("../../db");
+const { DataTypes } = require("sequelize");
 
 const MessageHistory = sequelize.define('MessageHistory', {
   message_id: {

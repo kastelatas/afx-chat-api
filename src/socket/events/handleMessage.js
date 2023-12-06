@@ -1,4 +1,5 @@
 const MessageHistory = require("../../models/MessageHistory");
+const Users = require("../../models/Users");
 
 const handleMessage = async (ws, data) => {
   let payload = data.payload;

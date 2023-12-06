@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../../db");
 const MessageHistory = require("./MessageHistory");
 
-const Users = sequelize.define('Users', {
+const User = sequelize.define('User', {
   user_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -20,7 +20,10 @@ const Users = sequelize.define('Users', {
   },
 });
 
-Users.hasMany(MessageHistory, { as: 'sentMessages', foreignKey: 'sender_id' });
-Users.hasMany(MessageHistory, { as: 'receivedMessages', foreignKey: 'recipient_id' });
+User.hasMany(MessageHistory, { foreignKey: 'sender_id', as: 'sentMessages' });
+User.hasMany(MessageHistory, { foreignKey: 'recipient_id', as: 'receivedMessages' });
 
-module.exports = Users;
+MessageHistory.belongsTo(User, { as: 'sender', foreignKey: 'sender_id' });
+MessageHistory.belongsTo(User, { as: 'recipient', foreignKey: 'recipient_id' });
+
+module.exports = User;
