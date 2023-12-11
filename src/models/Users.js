@@ -18,6 +18,10 @@ const User = sequelize.define('User', {
     allowNull: true,
     unique: true,
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
 });
 
 User.hasMany(MessageHistory, { foreignKey: 'sender_id', as: 'sentMessages' });

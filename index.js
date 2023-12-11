@@ -4,16 +4,15 @@ const app = express();
 const server = require("http").createServer(app);
 const cors = require("cors");
 const sequelize = require("./db");
-// const router = require("./src/routes");
+const router = require("./src/routes");
 const configureWebSocket = require("./src/socket");
-const Users = require("./src/models/Users");
 
 const PORT = process.env.PORT || 8000;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
-// app.use("/api", router);
+app.use("/api", router);
 
 
 app.use((req, res, next) => {
