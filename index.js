@@ -29,7 +29,7 @@ const start = async () => {
   try {
     await sequelize.authenticate();
     try {
-      await sequelize.sync({ force: true }); // force: true удалит существующие таблицы
+      await sequelize.sync({ force: false }); // force: true удалит существующие таблицы
       console.log('Таблицы успешно созданы.');
 
     } catch (error) {
