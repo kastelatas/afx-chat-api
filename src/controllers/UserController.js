@@ -49,3 +49,17 @@ exports.getAllUsers = async (req, res) => {
   if (!users) return res.sendStatus(400).send({ message: 'Users not found' });
   res.send(users);
 }
+
+exports.userAuth = async (req, res, next) => {
+  const token = req.header('auth-token');
+  if (!token) return res.status(401).send('Access denied');
+
+  try {
+    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+    const user = await User.findOne({ _id: verified._id });
+    if (!user) return res.status(401).send('User not found');
+    res.send(user);
+  } catch (err) {
+    res.status(400).send('Invalid token');
+  }
+};
