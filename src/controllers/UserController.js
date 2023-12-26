@@ -58,7 +58,7 @@ exports.userAuth = async (req, res, next) => {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     const user = await User.findOne({ _id: verified._id });
     if (!user) return res.status(401).send('User not found');
-    res.send(user);
+    res.header('auth-token', token).send(user);
   } catch (err) {
     res.status(400).send('Invalid token');
   }
